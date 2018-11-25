@@ -32,13 +32,12 @@ class SecurityController extends Controller
     {
         $checker = $this->get('security.authorization_checker');
         if ($checker->isGranted('ROLE_ADMIN')) {
-            //return $this->redirectToRoute('app_users');
+            return $this->redirectToRoute('admin_index');
         } else if ($checker->isGranted('ROLE_USER')) {
-            //return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('user_index');
         } else {
-            //die();
+            die();
         }
-        die(); //TODO: Add redirects
     }
 
     private function redirectTo($route)

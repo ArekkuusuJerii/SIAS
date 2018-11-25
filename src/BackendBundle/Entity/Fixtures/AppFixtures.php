@@ -49,6 +49,7 @@ class AppFixtures implements FixtureInterface, EncoderAwareInterface
         $persona->setApellidom("Dick");
         $usuario = new Usuario();
         $usuario->setUser("admin@g.c");
+        $usuario->setPassword("admin");
 
         $encoder = $this->encoder_factory->getEncoder($usuario);
         $password = $encoder->encodePassword($usuario->getPassword(), $usuario->getSalt());
