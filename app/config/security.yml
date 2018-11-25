@@ -7,7 +7,7 @@ security:
     - { path: ^/user/*, roles: ROLE_USER }
     - { path: ^/admin/*, roles: ROLE_ADMIN }
     encoders:
-        BackendBundle\Entity\User:
+        BackendBundle\Entity\Usuario:
             algorithm: bcrypt
             cost: 13
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
