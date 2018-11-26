@@ -1,0 +1,64 @@
+{% extends 'AppBundle:Layout:template.html.twig' %}
+{% block style %}
+    <style>
+        .color {
+            background: #dddddd;
+        }
+    </style>
+{% endblock %}
+{% block nav %}
+    <a href="{{ path('logout') }}">Logout</a>
+{% endblock %}
+{% block header %}
+    Lista de Proyectos
+{% endblock %}
+{% block body %}
+    <table>
+        <tr>
+            {# sorting of properties based on query components #}
+            <td>Ordenar por:</td>
+            <td>{{ knp_pagination_sortable(projects, 'Default', 'id') }}</td>
+            <td{% if projects.isSorted('proyecto') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(projects, 'Fecha Inicio', 'fechaInicio') }}
+                {{ knp_pagination_sortable(projects, 'Fecha Fin', 'fechaFin') }}
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>Nombre</td>
+            <td>Descripcion</td>
+            <td>Fecha Inicio</td>
+            <td>Fecha Fin</td>
+            <td>Empresa</td>
+            <td></td>
+        </tr>
+        {# table body #}
+        {% for project in projects %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ project.nombre }}</td>
+                <td>{{ project.descripcion }}</td>
+                <td>{{ project.fechaInicio }}</td>
+                {% if project.fechaInicio != null %}
+                    <td>{{ project.fechaInicio }}</td>
+                {% else %}
+                    Sin fecha
+                {% endif %}
+                <td>{{ project.empresa.nombre }}</td>
+                <td>
+                    <a href="{{ path('', {'id': project.id | urlencrypt }) }}">Edit</a>
+                    <a href="{{ path('', {'id': project.id | urlencrypt }) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <a class="btn btn-primary" href="{{ path('admin_project_create') }}">Nuevo Proyecto</a>
+            </td>
+        </tr>
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(projects) }}
+    </div>
+{% endblock %}

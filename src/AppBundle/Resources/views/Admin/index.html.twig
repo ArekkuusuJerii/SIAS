@@ -1,14 +1,15 @@
-{% extends 'AppBundle:Layout:template.html.twig'%}
+{% extends 'AppBundle:Layout:template.html.twig' %}
 {% block style %}
     <style>
 
     </style>
 {% endblock %}
 {% block nav %}
+    <a class="btn" href="{{ path('admin_project') }}">Proyectos</a>
     <a href="{{ path('logout') }}">Logout</a>
 {% endblock %}
 {% block header %}
-Admin dashboard
+    Admin dashboard
 {% endblock %}
 {% block body %}
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nunc id scelerisque fringilla. Aliquam at quam erat. Donec a arcu lorem. Suspendisse bibendum leo neque, vel viverra turpis aliquam a. Nullam laoreet feugiat varius. Pellentesque cursus mi id bibendum vestibulum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam suscipit sagittis rhoncus. Nunc malesuada tortor ultricies, auctor enim vel, ultricies risus. Praesent gravida faucibus quam, eu efficitur diam cursus a. Quisque in vulputate sem. Proin et est vel neque sagittis commodo vitae porttitor ex. Aliquam hendrerit, tortor et volutpat iaculis, urna quam consequat est, vel bibendum purus velit bibendum lectus. Suspendisse eu vulputate neque, et vehicula leo. Praesent sapien tellus, ultrices in leo non, ornare pretium justo.
