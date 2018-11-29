@@ -1,0 +1,62 @@
+{% extends 'AppBundle:Layout:template.html.twig' %}
+{% block style %}
+    <style>
+
+    </style>
+{% endblock %}
+{% block nav %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('admin_index') }}">Back</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+    </li>
+{% endblock %}
+{% block header %}
+    Lista de Empresas
+{% endblock %}
+{% block body %}
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                <div class="label">Ordenar por:</div>
+            </th>
+            <th scope="col">
+                <div class="btn">
+                    {{ knp_pagination_sortable(businesses, '#', 'id') }}
+                </div>
+            </th>
+            <th scope="col">
+                <div class="btn" {% if businesses.isSorted('nombre') %} class="btn"{% endif %}>
+                    {{ knp_pagination_sortable(businesses, 'Nombre', 'nombre') }}
+                </div>
+            </th>
+        </tr>
+        </thead>
+    </table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for business in businesses %}
+            <tr>
+                <td>{{ business.nombre }}</td>
+                <td>
+                    <a href="{{ path('admin_business_edit', {'id': business.id | urlencrypt }) }}">Edit</a>
+                    <a href="{{ path('admin_business_delete', {'id': business.id | urlencrypt }) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary btn-block" href="{{ path('admin_business_create') }}">Nueva Empresa</a>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(businesses) }}
+    </div>
+{% endblock %}

@@ -22,29 +22,39 @@ class ProyectoType extends AbstractType
             ->add('nombre', TextType::class, array(
                 'label' => 'Nombre',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('descripcion', TextareaType::class, array(
                 'label' => 'Descripción',
                 'attr' => array(
-                    'required' => true
+                    'required' => false,
+                    'empty_data' => 'Sin descripción',
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('fechaInicio', DateType::class, array(
                 'label' => 'Fecha de Inicio',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('empresa', EntityType::class, array(
                 'class' => 'BackendBundle\Entity\Empresa',
-                'choice_label' => 'empresa',
+                'choice_label' => 'nombre',
                 'expanded' => false,
-                'multiple' => false
+                'multiple' => false,
+                'attr' => array(
+                    'class' => 'form-control form-group'
+                )
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Submit'
+                'label' => 'Submit',
+                'attr' => array(
+                    'class' => 'btn btn-primary form-group'
+                )
             ));
     }
 

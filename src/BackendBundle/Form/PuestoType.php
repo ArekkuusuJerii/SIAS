@@ -18,7 +18,8 @@ class PuestoType extends AbstractType
             ->add('titulo', TextType::class, array(
                 'label' => 'Título',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ));
     }

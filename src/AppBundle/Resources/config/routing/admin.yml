@@ -2,6 +2,7 @@ admin_index:
   path: /
   defaults: {_controller: AppBundle:Admin:index}
 
+# Project #
 admin_project:
   path: /project
   defaults: {_controller: AppBundle:Admin:project}
@@ -10,6 +11,29 @@ admin_project_create:
   path: /project/create
   defaults: {_controller: AppBundle:Admin:projectCreate}
 
+admin_project_edit:
+  path: /project/edit/{id}
+  defaults: {_controller: AppBundle:Admin:projectEdit}
+
+admin_project_delete:
+  path: /project/delete/{id}
+  defaults: {_controller: AppBundle:Admin:projectDelete}
+# Project #
+
+# Business #
+admin_business:
+  path: /business
+  defaults: {_controller: AppBundle:Admin:business}
+
 admin_business_create:
   path: /business/create
   defaults: {_controller: AppBundle:Admin:businessCreate}
+
+admin_business_edit:
+  path: /business/edit/{id}
+  defaults: {_controller: AppBundle:Admin:businessEdit}
+
+admin_business_delete:
+  path: /business/delete/{id}
+  defaults: {_controller: AppBundle:Admin:businessDelete}
+# Business #

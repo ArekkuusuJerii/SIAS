@@ -18,15 +18,17 @@ class UsuarioType extends AbstractType
     {
         $builder
             ->add('user', EmailType::class, array(
-                'label' => 'Correo',
+                'label' => 'Usuario',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('password', PasswordType::class, array(
                 'label' => 'Contraseña',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('role', ChoiceType::class, array(
@@ -36,7 +38,8 @@ class UsuarioType extends AbstractType
                     'Admin' => 'ROLE_ADMIN'
                 ),
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('persona', PersonaType::class);

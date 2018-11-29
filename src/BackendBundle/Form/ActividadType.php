@@ -20,25 +20,31 @@ class ActividadType extends AbstractType
             ->add('descripcion', TextareaType::class, array(
                 'label' => 'Descripción',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('fechaInicio', DateType::class, array(
                 'label' => 'Fecha de Inicio',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('fechaFin', DateType::class, array(
                 'label' => 'Fecha de Finalización',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('participante')
             ->add('proyecto')
             ->add('submit', SubmitType::class, array(
-                'label' => 'Submit'
+                'label' => 'Submit',
+                'attr' => array(
+                    'class' => 'btn btn-primary form-group'
+                )
             ));
     }
 

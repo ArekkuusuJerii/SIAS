@@ -10,14 +10,19 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        {% block nav %}
-        {% endblock %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% block nav %}{% endblock %}
+            </ul>
+        </div>
     </nav>
     <body>
         <header>
-            <h1>{% block header %}{% endblock %}</h1>
+            <div class="pb-2 mt-4 mb-2 border-bottom text-center text-muted">
+                <h1>{% block header %}{% endblock %}</h1>
+            </div>
         </header>
-        <div class="container-fluid body">
+        <div class="container container-fluid body">
             {% block body %}
             {% endblock %}
         </div>

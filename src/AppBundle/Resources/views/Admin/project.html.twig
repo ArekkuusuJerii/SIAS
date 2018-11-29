@@ -1,62 +1,82 @@
 {% extends 'AppBundle:Layout:template.html.twig' %}
 {% block style %}
     <style>
-        .color {
-            background: #dddddd;
-        }
+
     </style>
 {% endblock %}
 {% block nav %}
-    <a href="{{ path('logout') }}">Logout</a>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('admin_index') }}">Back</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+    </li>
 {% endblock %}
 {% block header %}
     Lista de Proyectos
 {% endblock %}
 {% block body %}
-    <table>
+    <table class="table">
+        <thead class="thead-light">
         <tr>
-            {# sorting of properties based on query components #}
-            <td>Ordenar por:</td>
-            <td>{{ knp_pagination_sortable(projects, 'Default', 'id') }}</td>
-            <td{% if projects.isSorted('proyecto') %} class="sorted"{% endif %}>
-                {{ knp_pagination_sortable(projects, 'Fecha Inicio', 'fechaInicio') }}
-                {{ knp_pagination_sortable(projects, 'Fecha Fin', 'fechaFin') }}
-            </td>
+            <th scope="col">
+                <div class="label">Ordenar por:</div>
+            </th>
+            <th scope="col">
+                <div class="btn">
+                    {{ knp_pagination_sortable(projects, '#', 'id') }}
+                </div>
+            </th>
+            <th scope="col">
+                <div class="btn" {% if projects.isSorted('nombre') %} class="btn"{% endif %}>
+                    {{ knp_pagination_sortable(projects, 'Nombre', 'nombre') }}
+                </div>
+            </th>
+            <th scope="col">
+                <div class="btn" {% if projects.isSorted('fechaInicio') %} class="btn"{% endif %}>
+                    {{ knp_pagination_sortable(projects, 'Fecha Inicio', 'fechaInicio') }}
+                </div>
+            </th>
+            <th scope="col">
+                <div class="btn" {% if projects.isSorted('fechaFin') %} class="btn"{% endif %}>
+                    {{ knp_pagination_sortable(projects, 'Fecha Fin', 'fechaFin') }}
+                </div>
+            </th>
         </tr>
+        </thead>
     </table>
-    <table>
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <td>Nombre</td>
-            <td>Descripcion</td>
-            <td>Fecha Inicio</td>
-            <td>Fecha Fin</td>
-            <td>Empresa</td>
-            <td></td>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha Inicio</th>
+            <th scope="col">Fecha Fin</th>
+            <th scope="col">Empresa</th>
+            <th scope="col"></th>
         </tr>
-        {# table body #}
+        </thead>
+        <tbody>
         {% for project in projects %}
-            <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <tr>
                 <td>{{ project.nombre }}</td>
                 <td>{{ project.descripcion }}</td>
                 <td>{{ project.fechaInicio }}</td>
                 {% if project.fechaInicio != null %}
                     <td>{{ project.fechaInicio }}</td>
                 {% else %}
-                    Sin fecha
+                    Sin fecha de inicio
                 {% endif %}
                 <td>{{ project.empresa.nombre }}</td>
                 <td>
-                    <a href="{{ path('', {'id': project.id | urlencrypt }) }}">Edit</a>
-                    <a href="{{ path('', {'id': project.id | urlencrypt }) }}">Delete</a>
+                    <a href="{{ path('admin_project_edit', {'id': project.id | urlencrypt }) }}">Edit</a>
+                    <a href="{{ path('admin_project_delete', {'id': project.id | urlencrypt }) }}">Delete</a>
                 </td>
             </tr>
         {% endfor %}
-        <tr>
-            <td>
-                <a class="btn btn-primary" href="{{ path('admin_project_create') }}">Nuevo Proyecto</a>
-            </td>
-        </tr>
+        </tbody>
     </table>
+    <a class="btn btn-primary btn-block" href="{{ path('admin_project_create') }}">Nuevo Proyecto</a>
     {# display navigation #}
     <div class="navigation">
         {{ knp_pagination_render(projects) }}

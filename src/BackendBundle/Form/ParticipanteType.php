@@ -13,7 +13,10 @@ class ParticipanteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('desarrollador')->add('lider')->add('proyecto');
+        $builder
+            ->add('desarrollador')
+            ->add('lider')
+            ->add('proyecto');
     }
 
     /**

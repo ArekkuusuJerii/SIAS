@@ -18,19 +18,22 @@ class PersonaType extends AbstractType
             ->add('nombre', TextType::class, array(
                 'label' => 'Nombre',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('apellidop', TextType::class, array(
                 'label' => 'Apellido Paterno',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('apellidom', TextType::class, array(
                 'label' => 'Apellido Materno',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'btn btn-primary form-group'
                 )
             ));
     }

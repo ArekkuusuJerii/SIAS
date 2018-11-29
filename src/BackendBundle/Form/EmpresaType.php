@@ -19,11 +19,15 @@ class EmpresaType extends AbstractType
             ->add('nombre', TextType::class, array(
                 'label' => 'Nombre',
                 'attr' => array(
-                    'required' => true
+                    'required' => true,
+                    'class' => 'form-control form-group'
                 )
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Submit'
+                'label' => 'Submit',
+                'attr' => array(
+                    'class' => 'btn btn-primary form-group'
+                )
             ));
     }
 
