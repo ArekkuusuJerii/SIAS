@@ -2,6 +2,7 @@
 
 namespace BackendBundle\Form;
 
+use BackendBundle\Entity\Desarrollador;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -60,7 +61,11 @@ class ProyectoType extends AbstractType
             ))
             ->add('lider', EntityType::class, array(
                 'class' => 'BackendBundle\Entity\Desarrollador',
-                'choice_label' => 'usuario.persona.nombre',
+                'choice_label'  => function (Desarrollador $desarrollador) {
+                    return $desarrollador->getUsuario()->getPersona()->getNombre()
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidop()
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom();
+                },
                 'expanded' => false,
                 'multiple' => false,
                 'required' => false,

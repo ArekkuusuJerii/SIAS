@@ -143,6 +143,10 @@ class AdminController extends ControllerBase
         ));
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function developerCreateAction(Request $request)
     {
         return $this->defaultCreate($request,
@@ -153,24 +157,39 @@ class AdminController extends ControllerBase
         );
     }
 
+    /**
+     * @ParamDecryptor(params={"id"})
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
     public function developerEditAction(Request $request, $id)
     {
         return $this->defaultEdit($request,
             'BackendBundle:Desarrollador',
             DesarrolladorType::class, $id,
             'Editar Proyecto',
-            'admin_project'
+            'admin_developer'
         );
     }
 
+    /**
+     * @ParamDecryptor(params={"id"})
+     * @param $id
+     * @return RedirectResponse
+     */
     public function developerDeleteAction($id)
     {
         return $this->defaultDelete(
             'BackendBundle:Desarrollador', $id,
-            'admin_business'
+            'admin_developer'
         );
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function positionAction(Request $request)
     {
         return $this->render('AppBundle:admin:position.html.twig', array(
@@ -178,6 +197,10 @@ class AdminController extends ControllerBase
         ));
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function positionCreateAction(Request $request)
     {
         return $this->defaultCreate($request,
@@ -188,6 +211,12 @@ class AdminController extends ControllerBase
         );
     }
 
+    /**
+     * @ParamDecryptor(params={"id"})
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
     public function positionEditAction(Request $request, $id)
     {
         return $this->defaultEdit($request,
@@ -198,6 +227,11 @@ class AdminController extends ControllerBase
         );
     }
 
+    /**
+     * @ParamDecryptor(params={"id"})
+     * @param $id
+     * @return RedirectResponse
+     */
     public function positionDeleteAction($id)
     {
         return $this->defaultDelete(
