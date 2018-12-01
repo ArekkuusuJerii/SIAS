@@ -38,7 +38,7 @@ class ActividadType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('participante')
+            ->add('responsable')
             ->add('proyecto')
             ->add('submit', SubmitType::class, array(
                 'label' => 'Submit',

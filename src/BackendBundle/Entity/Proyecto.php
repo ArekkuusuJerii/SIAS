@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Proyecto
  *
- * @ORM\Table(name="proyecto", indexes={@ORM\Index(name="fk_Proyecto_Empresa1_idx", columns={"empresa"})})
+ * @ORM\Table(name="proyecto", indexes={@ORM\Index(name="fk_Proyecto_Desarrollador1_idx", columns={"lider"}), @ORM\Index(name="fk_Proyecto_Empresa1_idx", columns={"empresa"})})
  * @ORM\Entity
  */
 class Proyecto
@@ -24,16 +24,16 @@ class Proyecto
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
-     */
-    private $nombre;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="descripcion", type="string", length=255, nullable=false)
      */
     private $descripcion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_fin", type="datetime", nullable=false)
+     */
+    private $fechaFin;
 
     /**
      * @var \DateTime
@@ -43,11 +43,21 @@ class Proyecto
     private $fechaInicio;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="fecha_fin", type="datetime", nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
-    private $fechaFin;
+    private $nombre;
+
+    /**
+     * @var Desarrollador
+     *
+     * @ORM\ManyToOne(targetEntity="Desarrollador")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="lider", referencedColumnName="id")
+     * })
+     */
+    private $lider;
 
     /**
      * @var Empresa
@@ -60,6 +70,7 @@ class Proyecto
     private $empresa;
 
 
+
     /**
      * Get id
      *
@@ -68,30 +79,6 @@ class Proyecto
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Proyecto
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
     }
 
     /**
@@ -119,6 +106,30 @@ class Proyecto
     }
 
     /**
+     * Set fechaFin
+     *
+     * @param \DateTime $fechaFin
+     *
+     * @return Proyecto
+     */
+    public function setFechaFin($fechaFin)
+    {
+        $this->fechaFin = $fechaFin;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFin
+     *
+     * @return \DateTime
+     */
+    public function getFechaFin()
+    {
+        return $this->fechaFin;
+    }
+
+    /**
      * Set fechaInicio
      *
      * @param \DateTime $fechaInicio
@@ -143,27 +154,51 @@ class Proyecto
     }
 
     /**
-     * Set fechaFin
+     * Set nombre
      *
-     * @param \DateTime $fechaFin
+     * @param string $nombre
      *
      * @return Proyecto
      */
-    public function setFechaFin($fechaFin)
+    public function setNombre($nombre)
     {
-        $this->fechaFin = $fechaFin;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get fechaFin
+     * Get nombre
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getFechaFin()
+    public function getNombre()
     {
-        return $this->fechaFin;
+        return $this->nombre;
+    }
+
+    /**
+     * Set lider
+     *
+     * @param \BackendBundle\Entity\Desarrollador $lider
+     *
+     * @return Proyecto
+     */
+    public function setLider(\BackendBundle\Entity\Desarrollador $lider = null)
+    {
+        $this->lider = $lider;
+
+        return $this;
+    }
+
+    /**
+     * Get lider
+     *
+     * @return \BackendBundle\Entity\Desarrollador
+     */
+    public function getLider()
+    {
+        return $this->lider;
     }
 
     /**

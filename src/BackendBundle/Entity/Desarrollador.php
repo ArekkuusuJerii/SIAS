@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Desarrollador
  *
- * @ORM\Table(name="desarrollador", indexes={@ORM\Index(name="fk_Desarrollador_Puesto_idx", columns={"puesto"}), @ORM\Index(name="fk_Desarrollador_Usuario1_idx", columns={"usuario"})})
+ * @ORM\Table(name="desarrollador", indexes={@ORM\Index(name="fk_Desarrollador_Proyecto1_idx", columns={"proyecto"}), @ORM\Index(name="fk_Desarrollador_Puesto_idx", columns={"puesto"}), @ORM\Index(name="fk_Desarrollador_Usuario1_idx", columns={"usuario"})})
  * @ORM\Entity
  */
 class Desarrollador
@@ -20,6 +20,16 @@ class Desarrollador
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var Proyecto
+     *
+     * @ORM\ManyToOne(targetEntity="Proyecto")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proyecto", referencedColumnName="id")
+     * })
+     */
+    private $proyecto;
 
     /**
      * @var Puesto
@@ -42,6 +52,7 @@ class Desarrollador
     private $usuario;
 
 
+
     /**
      * Get id
      *
@@ -50,6 +61,30 @@ class Desarrollador
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set proyecto
+     *
+     * @param \BackendBundle\Entity\Proyecto $proyecto
+     *
+     * @return Desarrollador
+     */
+    public function setProyecto(\BackendBundle\Entity\Proyecto $proyecto = null)
+    {
+        $this->proyecto = $proyecto;
+
+        return $this;
+    }
+
+    /**
+     * Get proyecto
+     *
+     * @return \BackendBundle\Entity\Proyecto
+     */
+    public function getProyecto()
+    {
+        return $this->proyecto;
     }
 
     /**

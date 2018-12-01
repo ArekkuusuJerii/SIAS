@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Actividad
  *
- * @ORM\Table(name="actividad", indexes={@ORM\Index(name="fk_Actividad_Participante1_idx", columns={"participante"}), @ORM\Index(name="fk_Actividad_Proyecto1_idx", columns={"proyecto"})})
+ * @ORM\Table(name="actividad", indexes={@ORM\Index(name="fk_Actividad_Desarrollador1_idx", columns={"responsable"}), @ORM\Index(name="fk_Actividad_Proyecto1_idx", columns={"proyecto"})})
  * @ORM\Entity
  */
 class Actividad
@@ -31,23 +31,9 @@ class Actividad
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_inicio", type="datetime", nullable=false)
-     */
-    private $fechaInicio;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="fecha_fin", type="datetime", nullable=false)
      */
     private $fechaFin;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_inicio_real", type="datetime", nullable=true)
-     */
-    private $fechaInicioReal;
 
     /**
      * @var \DateTime
@@ -57,14 +43,28 @@ class Actividad
     private $fechaFinReal;
 
     /**
-     * @var Participante
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Participante")
+     * @ORM\Column(name="fecha_inicio", type="datetime", nullable=false)
+     */
+    private $fechaInicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio_real", type="datetime", nullable=true)
+     */
+    private $fechaInicioReal;
+
+    /**
+     * @var Desarrollador
+     *
+     * @ORM\ManyToOne(targetEntity="Desarrollador")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="participante", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="responsable", referencedColumnName="id")
      * })
      */
-    private $participante;
+    private $responsable;
 
     /**
      * @var Proyecto
@@ -75,6 +75,7 @@ class Actividad
      * })
      */
     private $proyecto;
+
 
 
     /**
@@ -112,30 +113,6 @@ class Actividad
     }
 
     /**
-     * Set fechaInicio
-     *
-     * @param \DateTime $fechaInicio
-     *
-     * @return Actividad
-     */
-    public function setFechaInicio($fechaInicio)
-    {
-        $this->fechaInicio = $fechaInicio;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaInicio
-     *
-     * @return \DateTime
-     */
-    public function getFechaInicio()
-    {
-        return $this->fechaInicio;
-    }
-
-    /**
      * Set fechaFin
      *
      * @param \DateTime $fechaFin
@@ -157,30 +134,6 @@ class Actividad
     public function getFechaFin()
     {
         return $this->fechaFin;
-    }
-
-    /**
-     * Set fechaInicioReal
-     *
-     * @param \DateTime $fechaInicioReal
-     *
-     * @return Actividad
-     */
-    public function setFechaInicioReal($fechaInicioReal)
-    {
-        $this->fechaInicioReal = $fechaInicioReal;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaInicioReal
-     *
-     * @return \DateTime
-     */
-    public function getFechaInicioReal()
-    {
-        return $this->fechaInicioReal;
     }
 
     /**
@@ -208,27 +161,75 @@ class Actividad
     }
 
     /**
-     * Set participante
+     * Set fechaInicio
      *
-     * @param \BackendBundle\Entity\Participante $participante
+     * @param \DateTime $fechaInicio
      *
      * @return Actividad
      */
-    public function setParticipante(\BackendBundle\Entity\Participante $participante = null)
+    public function setFechaInicio($fechaInicio)
     {
-        $this->participante = $participante;
+        $this->fechaInicio = $fechaInicio;
 
         return $this;
     }
 
     /**
-     * Get participante
+     * Get fechaInicio
      *
-     * @return \BackendBundle\Entity\Participante
+     * @return \DateTime
      */
-    public function getParticipante()
+    public function getFechaInicio()
     {
-        return $this->participante;
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaInicioReal
+     *
+     * @param \DateTime $fechaInicioReal
+     *
+     * @return Actividad
+     */
+    public function setFechaInicioReal($fechaInicioReal)
+    {
+        $this->fechaInicioReal = $fechaInicioReal;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicioReal
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicioReal()
+    {
+        return $this->fechaInicioReal;
+    }
+
+    /**
+     * Set responsable
+     *
+     * @param \BackendBundle\Entity\Desarrollador $responsable
+     *
+     * @return Actividad
+     */
+    public function setResponsable(\BackendBundle\Entity\Desarrollador $responsable = null)
+    {
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return \BackendBundle\Entity\Desarrollador
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
     }
 
     /**

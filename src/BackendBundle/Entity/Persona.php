@@ -24,9 +24,9 @@ class Persona
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @ORM\Column(name="apellidoM", type="string", length=255, nullable=false)
      */
-    private $nombre;
+    private $apellidom;
 
     /**
      * @var string
@@ -38,9 +38,10 @@ class Persona
     /**
      * @var string
      *
-     * @ORM\Column(name="apellidoM", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
-    private $apellidom;
+    private $nombre;
+
 
 
     /**
@@ -54,27 +55,27 @@ class Persona
     }
 
     /**
-     * Set nombre
+     * Set apellidom
      *
-     * @param string $nombre
+     * @param string $apellidom
      *
      * @return Persona
      */
-    public function setNombre($nombre)
+    public function setApellidom($apellidom)
     {
-        $this->nombre = $nombre;
+        $this->apellidom = $apellidom;
 
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get apellidom
      *
      * @return string
      */
-    public function getNombre()
+    public function getApellidom()
     {
-        return $this->nombre;
+        return $this->apellidom;
     }
 
     /**
@@ -102,26 +103,26 @@ class Persona
     }
 
     /**
-     * Set apellidom
+     * Set nombre
      *
-     * @param string $apellidom
+     * @param string $nombre
      *
      * @return Persona
      */
-    public function setApellidom($apellidom)
+    public function setNombre($nombre)
     {
-        $this->apellidom = $apellidom;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get apellidom
+     * Get nombre
      *
      * @return string
      */
-    public function getApellidom()
+    public function getNombre()
     {
-        return $this->apellidom;
+        return $this->nombre;
     }
 }

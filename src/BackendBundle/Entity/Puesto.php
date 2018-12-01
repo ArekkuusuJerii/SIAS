@@ -29,6 +29,7 @@ class Puesto
     private $titulo;
 
 
+
     /**
      * Get id
      *

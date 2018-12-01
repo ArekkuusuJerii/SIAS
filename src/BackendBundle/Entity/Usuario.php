@@ -25,13 +25,6 @@ class Usuario implements \Serializable, UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="user", type="string", length=255, nullable=false)
-     */
-    private $user;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
     private $password;
@@ -44,6 +37,13 @@ class Usuario implements \Serializable, UserInterface
     private $rol;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=255, nullable=false)
+     */
+    private $user;
+
+    /**
      * @var Persona
      *
      * @ORM\ManyToOne(targetEntity="Persona", cascade={"persist"})
@@ -54,6 +54,7 @@ class Usuario implements \Serializable, UserInterface
     private $persona;
 
 
+
     /**
      * Get id
      *
@@ -62,30 +63,6 @@ class Usuario implements \Serializable, UserInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set user
-     *
-     * @param string $user
-     *
-     * @return Usuario
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
@@ -134,6 +111,30 @@ class Usuario implements \Serializable, UserInterface
     public function getRol()
     {
         return $this->rol;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     *
+     * @return Usuario
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

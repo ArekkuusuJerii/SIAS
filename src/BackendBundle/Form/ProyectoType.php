@@ -21,8 +21,8 @@ class ProyectoType extends AbstractType
         $builder
             ->add('nombre', TextType::class, array(
                 'label' => 'Nombre',
+                'required' => true,
                 'attr' => array(
-                    'required' => true,
                     'class' => 'form-control form-group'
                 )
             ))
@@ -36,15 +36,15 @@ class ProyectoType extends AbstractType
             ))
             ->add('fechaInicio', DateType::class, array(
                 'label' => 'Fecha de Inicio',
+                'required' => true,
                 'attr' => array(
-                    'required' => true,
                     'class' => 'form-control form-group'
                 )
             ))
             ->add('fechaFin', DateType::class, array(
                 'label' => 'Fecha de Finalización',
+                'required' => true,
                 'attr' => array(
-                    'required' => true,
                     'class' => 'form-control form-group'
                 )
             ))
@@ -53,6 +53,17 @@ class ProyectoType extends AbstractType
                 'choice_label' => 'nombre',
                 'expanded' => false,
                 'multiple' => false,
+                'required' => true,
+                'attr' => array(
+                    'class' => 'form-control form-group'
+                )
+            ))
+            ->add('lider', EntityType::class, array(
+                'class' => 'BackendBundle\Entity\Desarrollador',
+                'choice_label' => 'usuario.persona.nombre',
+                'expanded' => false,
+                'multiple' => false,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control form-group'
                 )
