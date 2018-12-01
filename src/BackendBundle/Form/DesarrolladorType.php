@@ -2,7 +2,9 @@
 
 namespace BackendBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +16,27 @@ class DesarrolladorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('puesto')
-            ->add('usuario');
+            ->add('usuario', UsuarioType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'class' => 'form-group'
+                )
+            ))
+            ->add('puesto', EntityType::class, array(
+                'class' => 'BackendBundle\Entity\Puesto',
+                'choice_label' => 'titulo',
+                'expanded' => false,
+                'multiple' => false,
+                'attr' => array(
+                    'class' => 'form-control form-group'
+                )
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Submit',
+                'attr' => array(
+                    'class' => 'btn btn-primary form-group'
+                )
+            ));
     }
 
     /**

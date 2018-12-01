@@ -8,17 +8,20 @@
 
 namespace AppBundle\Controller;
 
+use BackendBundle\Entity\Desarrollador;
 use BackendBundle\Entity\Empresa;
 use BackendBundle\Entity\Proyecto;
+use BackendBundle\Entity\Puesto;
+use BackendBundle\Form\DesarrolladorType;
 use BackendBundle\Form\EmpresaType;
 use BackendBundle\Form\ProyectoType;
+use BackendBundle\Form\PuestoType;
 use Nzo\UrlEncryptorBundle\Annotations\ParamDecryptor;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminController extends Controller
+class AdminController extends ControllerBase
 {
     public function indexAction()
     {
@@ -42,20 +45,12 @@ class AdminController extends Controller
      */
     public function projectCreateAction(Request $request)
     {
-        $project = new Proyecto();
-        $form = $this->createForm(ProyectoType::class, $project);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getManager();
-            $manager->persist($project);
-            $manager->flush();
-            return $this->redirectTo('admin_project');
-        }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
-            'previous_page' => 'admin_project',
-            'title' => 'Crear Proyecto',
-            'form' => $form->createView()
-        ));
+        return $this->defaultCreate($request,
+            new Proyecto(),
+            ProyectoType::class,
+            'Crear Proyecto',
+            'admin_project'
+        );
     }
 
     /**
@@ -66,20 +61,12 @@ class AdminController extends Controller
      */
     public function projectEditAction(Request $request, $id)
     {
-        $project = $this->getManager()->getRepository('BackendBundle:Proyecto')->find($id);
-        $form = $this->createForm(ProyectoType::class, $project);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getManager();
-            $manager->persist($project);
-            $manager->flush();
-            return $this->redirectTo('admin_project');
-        }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
-            'previous_page' => 'admin_project',
-            'title' => 'Editar Proyecto',
-            'form' => $form->createView()
-        ));
+        return $this->defaultEdit($request,
+            'BackendBundle:Proyecto',
+            ProyectoType::class, $id,
+            'Editar Proyecto',
+            'admin_project'
+        );
     }
 
     /**
@@ -89,11 +76,10 @@ class AdminController extends Controller
      */
     public function projectDeleteAction($id)
     {
-        $manager = $this->getManager();
-        $project = $manager->getRepository('BackendBundle:Proyecto')->find($id);
-        $manager->remove($project);
-        $manager->flush();
-        return $this->redirectTo('admin_project');
+        return $this->defaultDelete(
+            'BackendBundle:Proyecto', $id,
+            'admin_project'
+        );
     }
 
     /**
@@ -113,20 +99,12 @@ class AdminController extends Controller
      */
     public function businessCreateAction(Request $request)
     {
-        $business = new Empresa();
-        $form = $this->createForm(EmpresaType::class, $business);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getManager();
-            $manager->persist($business);
-            $manager->flush();
-            return $this->redirectTo('admin_business');
-        }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
-            'previous_page' => 'admin_business',
-            'title' => 'Crear Empresa',
-            'form' => $form->createView()
-        ));
+        return $this->defaultCreate($request,
+            new Empresa(),
+            EmpresaType::class,
+            'Crear Empresa',
+            'admin_business'
+        );
     }
 
     /**
@@ -137,20 +115,12 @@ class AdminController extends Controller
      */
     public function businessEditAction(Request $request, $id)
     {
-        $business = $this->getManager()->getRepository('BackendBundle:Empresa')->find($id);
-        $form = $this->createForm(EmpresaType::class, $business);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getManager();
-            $manager->persist($business);
-            $manager->flush();
-            return $this->redirectTo('admin_business');
-        }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
-            'previous_page' => 'admin_business',
-            'title' => 'Editar Empresa',
-            'form' => $form->createView(),
-        ));
+        return $this->defaultEdit($request,
+            'BackendBundle:Empresa',
+            EmpresaType::class, $id,
+            'Editar Empresa',
+            'admin_business'
+        );
     }
 
     /**
@@ -160,43 +130,79 @@ class AdminController extends Controller
      */
     public function businessDeleteAction($id)
     {
-        $manager = $this->getManager();
-        $business = $manager->getRepository('BackendBundle:Empresa')->find($id);
-        $manager->remove($business);
-        $manager->flush();
-        return $this->redirectTo('admin_business');
-    }
-
-    /**
-     * @param $repository
-     * @param $request
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
-     */
-    private function makePagination($repository, $request)
-    {
-        $query = $this->getManager()->getRepository($repository)->findAll();
-        $paginator = $this->get('knp_paginator');
-        return $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            5/*limit per page*/
+        return $this->defaultDelete(
+            'BackendBundle:Empresa', $id,
+            'admin_business'
         );
     }
 
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectManager
-     */
-    private function getManager()
+    public function developerAction(Request $request)
     {
-        return $this->getDoctrine()->getManager();
+        return $this->render('AppBundle:admin:developer.html.twig', array(
+            'items' => $this->makePagination('BackendBundle:Desarrollador', $request)
+        ));
     }
 
-    /**
-     * @param $route
-     * @return RedirectResponse
-     */
-    private function redirectTo($route)
+    public function developerCreateAction(Request $request)
     {
-        return $this->redirect($this->generateUrl($route));
+        return $this->defaultCreate($request,
+            new Desarrollador(),
+            DesarrolladorType::class,
+            'Crear Desarrollador',
+            'admin_developer'
+        );
+    }
+
+    public function developerEditAction(Request $request, $id)
+    {
+        return $this->defaultEdit($request,
+            'BackendBundle:Desarrollador',
+            DesarrolladorType::class, $id,
+            'Editar Proyecto',
+            'admin_project'
+        );
+    }
+
+    public function developerDeleteAction($id)
+    {
+        return $this->defaultDelete(
+            'BackendBundle:Desarrollador', $id,
+            'admin_business'
+        );
+    }
+
+    public function positionAction(Request $request)
+    {
+        return $this->render('AppBundle:admin:position.html.twig', array(
+            'items' => $this->makePagination('BackendBundle:Puesto', $request)
+        ));
+    }
+
+    public function positionCreateAction(Request $request)
+    {
+        return $this->defaultCreate($request,
+            new Puesto(),
+            PuestoType::class,
+            'Crear Puesto',
+            'admin_position'
+        );
+    }
+
+    public function positionEditAction(Request $request, $id)
+    {
+        return $this->defaultEdit($request,
+            'BackendBundle:Puesto',
+            PuestoType::class, $id,
+            'Editar Puesto',
+            'admin_position'
+        );
+    }
+
+    public function positionDeleteAction($id)
+    {
+        return $this->defaultDelete(
+            'BackendBundle:Puesto', $id,
+            'admin_position'
+        );
     }
 }

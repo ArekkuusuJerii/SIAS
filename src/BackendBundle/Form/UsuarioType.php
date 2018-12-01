@@ -18,7 +18,7 @@ class UsuarioType extends AbstractType
     {
         $builder
             ->add('user', EmailType::class, array(
-                'label' => 'Usuario',
+                'label' => 'Correo',
                 'attr' => array(
                     'required' => true,
                     'class' => 'form-control form-group'
@@ -31,7 +31,7 @@ class UsuarioType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('role', ChoiceType::class, array(
+            ->add('rol', ChoiceType::class, array(
                 'label' => 'Rol',
                 'choices' => array(
                     'User' => 'ROLE_USER',
@@ -42,7 +42,12 @@ class UsuarioType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('persona', PersonaType::class);
+            ->add('persona', PersonaType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'class' => 'form-group'
+                )
+            ));
     }
 
     /**

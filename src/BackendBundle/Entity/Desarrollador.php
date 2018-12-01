@@ -34,7 +34,7 @@ class Desarrollador
     /**
      * @var Usuario
      *
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\OneToOne(targetEntity="Usuario", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
      * })

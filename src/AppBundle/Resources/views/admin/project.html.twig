@@ -42,19 +42,23 @@
 {% endblock %}
 {% block table_rows %}
     {% for item in items %}
-        <td>{{ item.nombre }}</td>
-        <td>{{ item.descripcion }}</td>
-        <td>{{ item.fechaInicio|date('d/M/Y') }}</td>
-        <td>{{ item.fechaFin|date('d/M/Y') }}</td>
-        <td>{{ item.empresa.nombre }}</td>
-        <td>
-            <a href="{{ path('admin_project_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
-            <a href="{{ path('admin_project_delete', {'id': item.id | urlencrypt }) }}">Delete</a>
-        </td>
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.fechaInicio|date('d/M/Y') }}</td>
+            <td>{{ item.fechaFin|date('d/M/Y') }}</td>
+            <td>{{ item.empresa.nombre }}</td>
+            <td>
+                <a href="{{ path('admin_project_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
+                <a href="{{ path('admin_project_delete', {'id': item.id | urlencrypt }) }}">Delete</a>
+            </td>
+        </tr>
     {% else %}
-        <td colspan="6" class="text-center">
-            Sin Proyectos
-        </td>
+        <tr>
+            <td colspan="6" class="text-center">
+                Sin Proyectos
+            </td>
+        </tr>
     {% endfor %}
 {% endblock %}
 {% block table_footer %}

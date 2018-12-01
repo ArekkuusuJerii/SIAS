@@ -1,39 +1,77 @@
 admin_index:
   path: /
-  defaults: {_controller: AppBundle:admin:index}
+  defaults: {_controller: AppBundle:Admin:index}
 
 # Project #
 admin_project:
   path: /project
-  defaults: {_controller: AppBundle:admin:project}
+  defaults: {_controller: AppBundle:Admin:project}
 
 admin_project_create:
   path: /project/create
-  defaults: {_controller: AppBundle:admin:projectCreate}
+  defaults: {_controller: AppBundle:Admin:projectCreate}
 
 admin_project_edit:
   path: /project/edit/{id}
-  defaults: {_controller: AppBundle:admin:projectEdit}
+  defaults: {_controller: AppBundle:Admin:projectEdit}
 
 admin_project_delete:
   path: /project/delete/{id}
-  defaults: {_controller: AppBundle:admin:projectDelete}
-# Project #
+  defaults: {_controller: AppBundle:Admin:projectDelete}
 
-# Business #
+  # Business #
 admin_business:
   path: /business
-  defaults: {_controller: AppBundle:admin:business}
+  defaults: {_controller: AppBundle:Admin:business}
 
 admin_business_create:
   path: /business/create
-  defaults: {_controller: AppBundle:admin:businessCreate}
+  defaults: {_controller: AppBundle:Admin:businessCreate}
 
 admin_business_edit:
   path: /business/edit/{id}
-  defaults: {_controller: AppBundle:admin:businessEdit}
+  defaults: {_controller: AppBundle:Admin:businessEdit}
 
 admin_business_delete:
   path: /business/delete/{id}
-  defaults: {_controller: AppBundle:admin:businessDelete}
-# Business #
+  defaults: {_controller: AppBundle:Admin:businessDelete}
+  # Business #
+# Project #
+
+# Developer #
+admin_developer:
+  path: /developer
+  defaults: {_controller: AppBundle:Admin:developer}
+
+admin_developer_create:
+  path: /developer/create
+  defaults: {_controller: AppBundle:Admin:developerCreate}
+
+admin_developer_edit:
+  path: /developer/edit/{id}
+  defaults: {_controller: AppBundle:Admin:developerEdit}
+
+admin_developer_delete:
+  path: /developer/delete/{id}
+  defaults: {_controller: AppBundle:Admin:developerDelete}
+
+  # User #
+      # Person #
+      # Person #
+  # User #
+
+  # Position #
+admin_position:
+  path: /position
+  defaults: {_controller: AppBundle:Admin:position}
+admin_position_create:
+  path: /position/create
+  defaults: {_controller: AppBundle:Admin:positionCreate}
+admin_position_edit:
+  path: /position/edit/{id}
+  defaults: {_controller: AppBundle:Admin:positionEdit}
+admin_position_delete:
+  path: /position/delete/{id}
+  defaults: {_controller: AppBundle:Admin:positionDelete}
+  # Position #
+# Developer #

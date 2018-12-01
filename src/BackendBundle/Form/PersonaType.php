@@ -33,7 +33,7 @@ class PersonaType extends AbstractType
                 'label' => 'Apellido Materno',
                 'attr' => array(
                     'required' => true,
-                    'class' => 'btn btn-primary form-group'
+                    'class' => 'form-control form-group'
                 )
             ));
     }
