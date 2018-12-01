@@ -1,0 +1,33 @@
+{% extends 'AppBundle:template:template.html.twig' %}
+{% block body %}
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                <div class="label">Ordenar por:</div>
+            </th>
+            {% block sortables %}{% endblock %}
+        </tr>
+        </thead>
+    </table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {% block table_columns %}
+            {% endblock %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% block table_rows %}
+            {% endblock %}
+        </tr>
+        </tbody>
+    </table>
+    {% block table_footer %}
+    {% endblock %}
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(items) }}
+    </div>
+{% endblock %}

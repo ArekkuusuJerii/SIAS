@@ -22,7 +22,7 @@ class AdminController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('AppBundle:Admin:index.html.twig', array());
+        return $this->render('AppBundle:admin:index.html.twig', array());
     }
 
     /**
@@ -31,8 +31,8 @@ class AdminController extends Controller
      */
     public function projectAction(Request $request)
     {
-        return $this->render('AppBundle:Admin:project.html.twig', array(
-            'projects' => $this->makePagination('BackendBundle:Proyecto', $request)
+        return $this->render('AppBundle:admin:project.html.twig', array(
+            'items' => $this->makePagination('BackendBundle:Proyecto', $request)
         ));
     }
 
@@ -51,7 +51,7 @@ class AdminController extends Controller
             $manager->flush();
             return $this->redirectTo('admin_project');
         }
-        return $this->render('AppBundle:Admin:admin_manage.html.twig', array(
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
             'previous_page' => 'admin_project',
             'title' => 'Crear Proyecto',
             'form' => $form->createView()
@@ -75,7 +75,7 @@ class AdminController extends Controller
             $manager->flush();
             return $this->redirectTo('admin_project');
         }
-        return $this->render('AppBundle:Admin:admin_manage.html.twig', array(
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
             'previous_page' => 'admin_project',
             'title' => 'Editar Proyecto',
             'form' => $form->createView()
@@ -102,8 +102,8 @@ class AdminController extends Controller
      */
     public function businessAction(Request $request)
     {
-        return $this->render('AppBundle:Admin:business.html.twig', array(
-            'businesses' => $this->makePagination('BackendBundle:Empresa', $request)
+        return $this->render('AppBundle:admin:business.html.twig', array(
+            'items' => $this->makePagination('BackendBundle:Empresa', $request)
         ));
     }
 
@@ -122,7 +122,7 @@ class AdminController extends Controller
             $manager->flush();
             return $this->redirectTo('admin_business');
         }
-        return $this->render('AppBundle:Admin:admin_manage.html.twig', array(
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
             'previous_page' => 'admin_business',
             'title' => 'Crear Empresa',
             'form' => $form->createView()
@@ -146,7 +146,7 @@ class AdminController extends Controller
             $manager->flush();
             return $this->redirectTo('admin_business');
         }
-        return $this->render('AppBundle:Admin:admin_manage.html.twig', array(
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
             'previous_page' => 'admin_business',
             'title' => 'Editar Empresa',
             'form' => $form->createView(),

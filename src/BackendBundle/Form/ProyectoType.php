@@ -28,14 +28,21 @@ class ProyectoType extends AbstractType
             ))
             ->add('descripcion', TextareaType::class, array(
                 'label' => 'Descripción',
+                'required' => false,
+                'empty_data' => 'Sin descripción',
                 'attr' => array(
-                    'required' => false,
-                    'empty_data' => 'Sin descripción',
                     'class' => 'form-control form-group'
                 )
             ))
             ->add('fechaInicio', DateType::class, array(
                 'label' => 'Fecha de Inicio',
+                'attr' => array(
+                    'required' => true,
+                    'class' => 'form-control form-group'
+                )
+            ))
+            ->add('fechaFin', DateType::class, array(
+                'label' => 'Fecha de Finalización',
                 'attr' => array(
                     'required' => true,
                     'class' => 'form-control form-group'

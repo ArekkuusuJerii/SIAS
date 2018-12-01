@@ -1,0 +1,62 @@
+{% extends 'AppBundle:template:paginator_template.html.twig' %}
+{% block nav %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('admin_index') }}">Back</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+    </li>
+{% endblock %}
+{% block header %}
+    Lista de Proyectos
+{% endblock %}
+{% block sortables %}
+    <th scope="col">
+        <div>
+            {{ knp_pagination_sortable(items, '#', 'id') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('nombre') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Nombre', 'nombre') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Fecha Inicio', 'fechaInicio') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Fecha Fin', 'fechaFin') }}
+        </div>
+    </th>
+{% endblock %}
+{% block table_columns %}
+    <th scope="col">Nombre</th>
+    <th scope="col">Descripcion</th>
+    <th scope="col">Fecha Inicio</th>
+    <th scope="col">Fecha Fin</th>
+    <th scope="col">Empresa</th>
+    <th scope="col"></th>
+{% endblock %}
+{% block table_rows %}
+    {% for item in items %}
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.descripcion }}</td>
+        <td>{{ item.fechaInicio|date('d/M/Y') }}</td>
+        <td>{{ item.fechaFin|date('d/M/Y') }}</td>
+        <td>{{ item.empresa.nombre }}</td>
+        <td>
+            <a href="{{ path('admin_project_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
+            <a href="{{ path('admin_project_delete', {'id': item.id | urlencrypt }) }}">Delete</a>
+        </td>
+    {% else %}
+        <td colspan="6" class="text-center">
+            Sin Proyectos
+        </td>
+    {% endfor %}
+{% endblock %}
+{% block table_footer %}
+    <a class="btn btn-primary btn-block" href="{{ path('admin_project_create') }}">Nuevo Proyecto</a>
+{% endblock %}

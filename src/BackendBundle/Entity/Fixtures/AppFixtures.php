@@ -44,7 +44,7 @@ class AppFixtures implements FixtureInterface, EncoderAwareInterface
     public function load(ObjectManager $manager)
     {
         $persona = new Persona();
-        $persona->setNombre("Admin");
+        $persona->setNombre("admin");
         $persona->setApellidop("Mr");
         $persona->setApellidom("Dick");
         $usuario = new Usuario();
