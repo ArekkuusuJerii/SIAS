@@ -40,6 +40,7 @@
     <th scope="col">Empresa</th>
     <th scope="col">Líder</th>
     <th scope="col"></th>
+    <th scope="col"></th>
 {% endblock %}
 {% block table_rows %}
     {% for item in items %}
@@ -60,6 +61,8 @@
             </td>
             <td>
                 <a href="{{ path('admin_project_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
+            </td>
+            <td>
                 <a href="{{ path('admin_project_delete', {'id': item.id | urlencrypt }) }}">Delete</a>
             </td>
         </tr>

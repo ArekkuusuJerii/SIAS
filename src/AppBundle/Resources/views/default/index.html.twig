@@ -1,11 +1,8 @@
 {% extends 'AppBundle:template:template.html.twig' %}
-{% block style %}
-    <style>
-
-    </style>
-{% endblock %}
 {% block nav %}
-    <a href="{{ path('login') }}">Login</a>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('login') }}">Login</a>
+    </li>
 {% endblock %}
 {% block header %}
 

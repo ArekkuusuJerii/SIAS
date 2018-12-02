@@ -25,15 +25,23 @@
         <div {% if items.isSorted('descripcion') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
         </div>
+    </th>
+    <th scope="col">
         <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Inicio', 'fechaInicio') }}
         </div>
+    </th>
+    <th scope="col">
         <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Finalización', 'fechaFin') }}
         </div>
+    </th>
+    <th scope="col">
         <div {% if items.isSorted('fechaInicioReal') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Inicio Real', 'fechaInicioReal') }}
         </div>
+    </th>
+    <th scope="col">
         <div {% if items.isSorted('fechaFinReal') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Finalización Real', 'fechaFinReal') }}
         </div>
@@ -45,6 +53,7 @@
     <th scope="col">Fecha de Finalización</th>
     <th scope="col">Fecha de Inicio Real</th>
     <th scope="col">Fecha de Finalización Real</th>
+    <th scope="col"></th>
     <th scope="col"></th>
 {% endblock %}
 {% block table_rows %}
@@ -79,11 +88,15 @@
                     Sin Fecha
                 {% endif %}
             </td>
-            <td>
-                {% if is_leader %}
+            {% if is_leader %}
+                <td>
                     <a href="{{ path('user_activity_edit', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Editar</a>
+                </td>
+                <td>
                     <a href="{{ path('user_activity_delete', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Eliminar</a>
-                {% else %}
+                </td>
+            {% else %}
+                <td>
                     {% if item.fechaInicioReal is not null %}
                         {% if item.fechaFinReal is not null %}
                             <a href="{{ path('user_activity_revert', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Revertir</a>
@@ -93,8 +106,8 @@
                     {% else %}
                         <a href="{{ path('user_activity_begin', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Comenzar</a>
                     {% endif %}
-                {% endif %}
-            </td>
+                </td>
+            {% endif %}
         </tr>
     {% else %}
         <tr>

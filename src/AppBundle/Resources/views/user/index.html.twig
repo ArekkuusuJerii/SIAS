@@ -1,6 +1,8 @@
 {% extends 'AppBundle:template:paginator_template.html.twig' %}
 {% block nav %}
-    <a href="{{ path('logout') }}">Logout</a>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+    </li>
 {% endblock %}
 {% block header %}
     Proyectos de Desarrollador
@@ -17,6 +19,11 @@
         </div>
     </th>
     <th scope="col">
+        <div {% if items.isSorted('descripcion') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Descripcion', 'descripcion') }}
+        </div>
+    </th>
+    <th scope="col">
         <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Inicio', 'fechaInicio') }}
         </div>
@@ -24,6 +31,16 @@
     <th scope="col">
         <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Fin', 'fechaFin') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('empresa') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Empresa', 'empresa') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('lider') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Líder', 'lider') }}
         </div>
     </th>
 {% endblock %}

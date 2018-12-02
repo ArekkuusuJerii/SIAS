@@ -29,6 +29,7 @@
     <th scope="col">Apellido Materno</th>
     <th scope="col">Puesto</th>
     <th scope="col"></th>
+    <th scope="col"></th>
 {% endblock %}
 {% block table_rows %}
     {% for item in items %}
@@ -40,6 +41,8 @@
             <td>{{ item.puesto.titulo }}</td>
             <td>
                 <a href="{{ path('admin_developer_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
+            </td>
+            <td>
                 <a href="{{ path('admin_developer_delete', {'id': item.id | urlencrypt }) }}">Delete</a>
             </td>
         </tr>
