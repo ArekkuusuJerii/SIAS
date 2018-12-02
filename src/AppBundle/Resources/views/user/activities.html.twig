@@ -1,0 +1,112 @@
+{% extends 'AppBundle:template:paginator_template.html.twig' %}
+{% block nav %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('user_index') }}">Back</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+    </li>
+{% endblock %}
+{% block header %}
+    Lista de Actividades
+{% endblock %}
+{% block sortables %}
+    <th scope="col">
+        <div>
+            {{ knp_pagination_sortable(items, '#', 'id') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div>
+            Fecha:
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('descripcion') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
+        </div>
+        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Inicio', 'fechaInicio') }}
+        </div>
+        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Finalización', 'fechaFin') }}
+        </div>
+        <div {% if items.isSorted('fechaInicioReal') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Inicio Real', 'fechaInicioReal') }}
+        </div>
+        <div {% if items.isSorted('fechaFinReal') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Finalización Real', 'fechaFinReal') }}
+        </div>
+    </th>
+{% endblock %}
+{% block table_columns %}
+    <th scope="col">Descripción</th>
+    <th scope="col">Fecha de Inicio</th>
+    <th scope="col">Fecha de Finalización</th>
+    <th scope="col">Fecha de Inicio Real</th>
+    <th scope="col">Fecha de Finalización Real</th>
+    <th scope="col"></th>
+{% endblock %}
+{% block table_rows %}
+    {% for item in items %}
+        <tr>
+            <td>{{ item.descripcion }}</td>
+            <td>
+                {% if item.fechaInicio is not null %}
+                    {{ item.fechaInicio|date('d/M/Y') }}
+                {% else %}
+                    Sin Fecha
+                {% endif %}
+            </td>
+            <td>
+                {% if item.fechaFin is not null %}
+                    {{ item.fechaFin|date('d/M/Y') }}
+                {% else %}
+                    Sin Fecha
+                {% endif %}
+            </td>
+            <td>
+                {% if item.fechaInicioReal is not null %}
+                    {{ item.fechaInicioReal|date('d/M/Y') }}
+                {% else %}
+                    Sin Fecha
+                {% endif %}
+            </td>
+            <td>
+                {% if item.fechaFinReal is not null %}
+                    {{ item.fechaFinReal|date('d/M/Y') }}
+                {% else %}
+                    Sin Fecha
+                {% endif %}
+            </td>
+            <td>
+                {% if is_leader %}
+                    <a href="{{ path('user_activity_edit', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Editar</a>
+                    <a href="{{ path('user_activity_delete', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Eliminar</a>
+                {% else %}
+                    {% if item.fechaInicioReal is not null %}
+                        {% if item.fechaFinReal is not null %}
+                            <a href="{{ path('user_activity_revert', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Revertir</a>
+                        {% else %}
+                            <a href="{{ path('user_activity_complete', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Completar</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('user_activity_begin', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Comenzar</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6" class="text-center">
+                Sin Actividades
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+{% block table_footer %}
+    {% if is_leader %}
+        <a class="btn btn-primary btn-block"
+           href="{{ path('user_activity_create', {'project_id': project_id | urlencrypt}) }}">Nueva Actividad</a>
+    {% endif %}
+{% endblock %}

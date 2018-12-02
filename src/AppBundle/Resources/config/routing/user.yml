@@ -1,3 +1,31 @@
 user_index:
   path: /
   defaults: {_controller: AppBundle:User:index}
+
+user_activities:
+  path: /activities/{id}
+  defaults: {_controller: AppBundle:User:activities}
+
+user_activity_create:
+  path: /activity/create/{project_id}
+  defaults: {_controller: AppBundle:User:activityCreate}
+
+user_activity_edit:
+  path: /activity/edit/{project_id}/{id}
+  defaults: {_controller: AppBundle:User:activityEdit}
+
+user_activity_delete:
+  path: /activity/delete/{project_id}/{id}
+  defaults: {_controller: AppBundle:User:activityDelete}
+
+user_activity_begin:
+  path: /activity/begin/{project_id}/{id}
+  defaults: {_controller: AppBundle:User:activityBegin}
+
+user_activity_complete:
+  path: /activity/complete/{project_id}/{id}
+  defaults: {_controller: AppBundle:User:activityComplete}
+
+user_activity_revert:
+  path: /activity/revert/{project_id}/{id}
+  defaults: {_controller: AppBundle:User:activityRevert}

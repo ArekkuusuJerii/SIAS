@@ -55,9 +55,9 @@ admin_developer_delete:
   path: /developer/delete/{id}
   defaults: {_controller: AppBundle:Admin:developerDelete}
 
-  # User #
-      # Person #
-      # Person #
+    # User #
+    # Person #
+  # Person #
   # User #
 
   # Position #

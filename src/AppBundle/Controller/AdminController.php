@@ -149,28 +149,52 @@ class AdminController extends ControllerBase
      */
     public function developerCreateAction(Request $request)
     {
-        return $this->defaultCreate($request,
-            new Desarrollador(),
-            DesarrolladorType::class,
-            'Crear Desarrollador',
-            'admin_developer'
-        );
+        $entity = new Desarrollador();
+        $form = $this->createForm(DesarrolladorType::class, $entity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getManager();
+            $encoder_factory = $this->get('security.encoder_factory');
+            $encoder = $encoder_factory->getEncoder($entity->getUsuario());
+            $password = $encoder->encodePassword($entity->getUsuario()->getPassword(), $entity->getUsuario()->getSalt());
+            $entity->getUsuario()->setPassword($password);
+            $manager->persist($entity);
+            $manager->flush();
+            return $this->redirectTo('admin_developer');
+        }
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
+            'previous_page' => 'admin_developer',
+            'title' => 'Crear Desarrollador',
+            'form' => $form->createView()
+        ));
     }
 
     /**
      * @ParamDecryptor(params={"id"})
      * @param Request $request
      * @param $id
-     * @return RedirectResponse
+     * @return RedirectResponse|Response
      */
     public function developerEditAction(Request $request, $id)
     {
-        return $this->defaultEdit($request,
-            'BackendBundle:Desarrollador',
-            DesarrolladorType::class, $id,
-            'Editar Proyecto',
-            'admin_developer'
-        );
+        $entity = $this->getManager()->getRepository('BackendBundle:Desarrollador')->find($id);
+        $form = $this->createForm(DesarrolladorType::class, $entity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getManager();
+            $encoder_factory = $this->get('security.encoder_factory');
+            $encoder = $encoder_factory->getEncoder($entity->getUsuario());
+            $password = $encoder->encodePassword($entity->getUsuario()->getPassword(), $entity->getUsuario()->getSalt());
+            $entity->getUsuario()->setPassword($password);
+            $manager->persist($entity);
+            $manager->flush();
+            return $this->redirectTo('admin_developer');
+        }
+        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
+            'previous_page' => 'admin_developer',
+            'title' => 'Editar Proyecto',
+            'form' => $form->createView()
+        ));
     }
 
     /**

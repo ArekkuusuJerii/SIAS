@@ -44,13 +44,12 @@ class Desarrollador
     /**
      * @var Usuario
      *
-     * @ORM\OneToOne(targetEntity="Usuario", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Usuario", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
      * })
      */
     private $usuario;
-
 
 
     /**

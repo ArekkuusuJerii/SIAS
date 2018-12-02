@@ -11,10 +11,11 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class ControllerBase extends Controller
+abstract class ControllerBase extends Controller
 {
 
-    function defaultCreate($request, $entity, $form, $title = '', $prev = 'admin_index') {
+    function defaultCreate($request, $entity, $form, $title = '', $prev = 'admin_index')
+    {
         $form = $this->createForm($form, $entity);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -23,14 +24,15 @@ class ControllerBase extends Controller
             $manager->flush();
             return $this->redirectTo($prev);
         }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
+        return $this->render($this->defaultManage(), array(
             'previous_page' => $prev,
             'title' => $title,
             'form' => $form->createView()
         ));
     }
 
-    function defaultEdit($request, $class, $form, $id, $title = '', $prev = 'admin_index') {
+    function defaultEdit($request, $class, $form, $id, $title = '', $prev = 'admin_index')
+    {
         $entity = $this->getManager()->getRepository($class)->find($id);
         $form = $this->createForm($form, $entity);
         $form->handleRequest($request);
@@ -40,19 +42,25 @@ class ControllerBase extends Controller
             $manager->flush();
             return $this->redirectTo($prev);
         }
-        return $this->render('AppBundle:admin:admin_manage.html.twig', array(
+        return $this->render($this->defaultManage(), array(
             'previous_page' => $prev,
             'title' => $title,
             'form' => $form->createView()
         ));
     }
 
-    function defaultDelete($class, $id, $prev = 'admin_index') {
+    function defaultDelete($class, $id, $prev = 'admin_index')
+    {
         $manager = $this->getManager();
         $business = $manager->getRepository($class)->find($id);
         $manager->remove($business);
         $manager->flush();
         return $this->redirectTo($prev);
+    }
+
+    function defaultManage()
+    {
+        return 'AppBundle:admin:admin_manage.html.twig';
     }
 
     /**
@@ -63,6 +71,16 @@ class ControllerBase extends Controller
     function makePagination($repository, $request)
     {
         $query = $this->getManager()->getRepository($repository)->findAll();
+        return $this->makePaginationFromQuery($request, $query);
+    }
+
+    /**
+     * @param $request
+     * @param $query
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     */
+    function makePaginationFromQuery($request, $query)
+    {
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
             $query, /* query NOT result */

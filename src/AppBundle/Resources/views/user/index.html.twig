@@ -1,23 +1,67 @@
-{% extends 'AppBundle:Layout:template.html.twig'%}
-{% block style %}
-    <style>
-
-    </style>
-{% endblock %}
+{% extends 'AppBundle:template:paginator_template.html.twig' %}
 {% block nav %}
     <a href="{{ path('logout') }}">Logout</a>
 {% endblock %}
 {% block header %}
-User dashboard
+    Proyectos de Desarrollador
 {% endblock %}
-{% block body %}
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nunc id scelerisque fringilla. Aliquam at quam erat. Donec a arcu lorem. Suspendisse bibendum leo neque, vel viverra turpis aliquam a. Nullam laoreet feugiat varius. Pellentesque cursus mi id bibendum vestibulum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam suscipit sagittis rhoncus. Nunc malesuada tortor ultricies, auctor enim vel, ultricies risus. Praesent gravida faucibus quam, eu efficitur diam cursus a. Quisque in vulputate sem. Proin et est vel neque sagittis commodo vitae porttitor ex. Aliquam hendrerit, tortor et volutpat iaculis, urna quam consequat est, vel bibendum purus velit bibendum lectus. Suspendisse eu vulputate neque, et vehicula leo. Praesent sapien tellus, ultrices in leo non, ornare pretium justo.
-
-    Maecenas facilisis mi eu magna consectetur imperdiet. Quisque quis turpis vitae elit tincidunt elementum. Quisque fermentum metus auctor orci semper, et vulputate tortor tempor. Cras ac odio libero. Nunc dictum leo libero, eu facilisis leo elementum vel. Ut eu rhoncus mi. Etiam sit amet porta ante. Phasellus sodales lectus leo, at convallis ex feugiat et. Vestibulum vitae metus ac mi accumsan congue ut eu justo. Sed euismod interdum velit eu tincidunt. Vivamus vehicula est sit amet orci vulputate imperdiet.
-
-    Nullam at faucibus ligula. Vestibulum velit dui, vestibulum vitae iaculis gravida, vehicula et elit. Fusce et nisl sit amet ipsum bibendum interdum. Donec sit amet tellus et diam lobortis porttitor efficitur eget turpis. Praesent tellus libero, faucibus non vehicula a, pellentesque a risus. Aenean nec leo lacinia, congue lacus eu, rutrum ante. Morbi aliquam tellus purus, nec tincidunt orci rutrum vitae. Aliquam sit amet sollicitudin nisl. Cras quis condimentum metus. Vivamus et quam at elit fringilla cursus. Aenean fringilla, eros vitae gravida accumsan, lectus orci mollis justo, at aliquet nunc arcu id lectus. Quisque in eleifend ipsum. Quisque egestas tristique tristique. Sed consectetur ante purus. Etiam cursus fermentum dui, quis sagittis velit lobortis vel. Nulla porta nunc sit amet molestie blandit.
-
-    Praesent commodo sapien urna. Mauris luctus luctus lectus sit amet fringilla. Etiam hendrerit felis quis tellus egestas, ut euismod turpis faucibus. Quisque vulputate velit purus, sed tristique mi bibendum quis. Proin in tempor quam. Vestibulum mattis urna ut tellus laoreet pulvinar. Nulla scelerisque magna turpis, sed lacinia velit dapibus vitae. Vestibulum et mauris odio. Aenean gravida feugiat augue at tincidunt. Etiam suscipit et leo a pharetra. Sed dignissim pharetra eros id suscipit. Mauris nisi felis, tempor non purus vitae, rhoncus euismod turpis. Aenean blandit a erat varius laoreet. Ut finibus fermentum libero eu consequat. Proin varius mi nec leo hendrerit ultrices. Maecenas porta augue sit amet odio fringilla, a malesuada lacus aliquet.
-
-    Duis eu lorem id arcu hendrerit sollicitudin non nec nunc. Duis dolor odio, mollis a dolor aliquam, ultricies pharetra dui. Pellentesque viverra leo sapien, a dignissim ligula luctus ac. Nulla commodo non magna et hendrerit. Sed ex dolor, maximus ac mattis in, venenatis in magna. Duis non varius eros. Fusce semper at dolor ac dapibus. Integer a semper nunc. Nam nec elit nec elit dictum commodo. In pretium libero quis odio lobortis hendrerit. Cras sagittis ultricies leo, et iaculis risus porttitor sit amet. Suspendisse in lacus sagittis, posuere nulla vel, pharetra ex. Aliquam a urna semper, elementum lacus accumsan, euismod est.
+{% block sortables %}
+    <th scope="col">
+        <div>
+            {{ knp_pagination_sortable(items, '#', 'id') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('nombre') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Nombre', 'nombre') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Fecha Inicio', 'fechaInicio') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Fecha Fin', 'fechaFin') }}
+        </div>
+    </th>
+{% endblock %}
+{% block table_columns %}
+    <th scope="col">Nombre</th>
+    <th scope="col">Descripcion</th>
+    <th scope="col">Fecha Inicio</th>
+    <th scope="col">Fecha Fin</th>
+    <th scope="col">Empresa</th>
+    <th scope="col">Líder</th>
+    <th scope="col"></th>
+{% endblock %}
+{% block table_rows %}
+    {% for item in items %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.fechaInicio|date('d/M/Y') }}</td>
+            <td>{{ item.fechaFin|date('d/M/Y') }}</td>
+            <td>{{ item.empresa.nombre }}</td>
+            <td>
+                {% if item.lider is not null %}
+                    {{ item.lider.usuario.persona.nombre }}
+                    {{ item.lider.usuario.persona.apellidop }}
+                    {{ item.lider.usuario.persona.apellidom }}
+                {% else %}
+                    Sin Líder
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('user_activities', {'id': item.id | urlencrypt }) }}">Ver Actividades</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6" class="text-center">
+                Sin Proyectos
+            </td>
+        </tr>
+    {% endfor %}
 {% endblock %}

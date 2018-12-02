@@ -2,6 +2,8 @@
 
 namespace BackendBundle\Form;
 
+use BackendBundle\Entity\Desarrollador;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -38,8 +40,20 @@ class ActividadType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('responsable')
-            ->add('proyecto')
+            ->add('responsable', EntityType::class, array(
+                'class' => 'BackendBundle\Entity\Desarrollador',
+                'choice_label' => function (Desarrollador $desarrollador) {
+                    return $desarrollador->getUsuario()->getPersona()->getNombre()
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidop()
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom();
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'required' => true,
+                'attr' => array(
+                    'class' => 'form-control form-group'
+                )
+            ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Submit',
                 'attr' => array(

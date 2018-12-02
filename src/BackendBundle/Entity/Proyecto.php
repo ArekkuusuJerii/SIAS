@@ -2,13 +2,14 @@
 
 namespace BackendBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Proyecto
  *
  * @ORM\Table(name="proyecto", indexes={@ORM\Index(name="fk_Proyecto_Desarrollador1_idx", columns={"lider"}), @ORM\Index(name="fk_Proyecto_Empresa1_idx", columns={"empresa"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="BackendBundle\Entity\Repository\ProyectoRepository")
  */
 class Proyecto
 {
@@ -52,7 +53,7 @@ class Proyecto
     /**
      * @var Desarrollador
      *
-     * @ORM\ManyToOne(targetEntity="Desarrollador")
+     * @ORM\ManyToOne(targetEntity="Desarrollador", cascade={"remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lider", referencedColumnName="id")
      * })
@@ -69,6 +70,21 @@ class Proyecto
      */
     private $empresa;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Desarrollador", mappedBy="proyecto", cascade={"remove"})
+     */
+    private $desarrolladores;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Actividad", mappedBy="proyecto", cascade={"remove"})
+     */
+    private $actividades;
+
+    public function __construct()
+    {
+        $this->actividades = new ArrayCollection();
+        $this->desarrolladores = new ArrayCollection();
+    }
 
 
     /**
@@ -223,5 +239,37 @@ class Proyecto
     public function getEmpresa()
     {
         return $this->empresa;
+    }
+
+    /**
+     * @param mixed $actividades
+     */
+    public function setActividades($actividades)
+    {
+        $this->actividades = $actividades;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActividades()
+    {
+        return $this->actividades;
+    }
+
+    /**
+     * @param mixed $desarrolladores
+     */
+    public function setDesarrolladores($desarrolladores)
+    {
+        $this->desarrolladores = $desarrolladores;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesarrolladores()
+    {
+        return $this->desarrolladores;
     }
 }
