@@ -11,6 +11,7 @@ namespace BackendBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProyectoRepository extends EntityRepository
 {
@@ -59,5 +60,18 @@ class ProyectoRepository extends EntityRepository
             ));
         $query->setParameters(array($project_id, $user_id));
         return $query->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param $project_id
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getProgress($project_id)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->getConnection()->prepare('call progress('.$project_id.')');
+        $query->execute();
+        return $query->fetchColumn(0);
     }
 }

@@ -14,32 +14,32 @@
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('nombre') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('nombre') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Nombre', 'nombre') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('descripcion') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('descripcion') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Descripcion', 'descripcion') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaInicio') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Inicio', 'fechaInicio') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaFin') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Fin', 'fechaFin') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('empresa') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('empresa') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Empresa', 'empresa') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('lider') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('lider') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Líder', 'lider') }}
         </div>
     </th>

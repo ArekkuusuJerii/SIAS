@@ -17,7 +17,7 @@
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('nombre') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('nombre') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Nombre', 'nombre') }}
         </div>
     </th>

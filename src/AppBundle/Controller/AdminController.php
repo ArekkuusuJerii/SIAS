@@ -40,6 +40,21 @@ class AdminController extends ControllerBase
     }
 
     /**
+     * @ParamDecryptor(params={"id"})
+     * @param $id
+     * @return Response
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function projectProgressAction($id)
+    {
+        $query = $this->getManager()->getRepository('BackendBundle:Proyecto');
+        $projectProgress = $query->getProgress($id);
+        return $this->render('AppBundle:default:dialog.html.twig', array(
+            'projectProgress' => $projectProgress
+        ));
+    }
+
+    /**
      * @param Request $request
      * @return RedirectResponse|Response
      */

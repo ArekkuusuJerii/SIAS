@@ -1,11 +1,14 @@
 {% extends 'AppBundle:template:dialog_template.html.twig' %}
 {% block title %}
-    {{ title }}
+    Seguimiento del proyecto
 {% endblock %}
 {% block body %}
-
+    <div class="text-center card">
+        <div class="card-body">
+            <p class="card-text">Porcentaje completado: {{ projectProgress }}%</p>
+        </div>
+    </div>
 {% endblock %}
 {% block footer %}
     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-    <button type="button" class="btn btn-primary">Guardar</button>
 {% endblock %}

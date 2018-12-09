@@ -17,28 +17,34 @@
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('nombre') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('nombre') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Nombre', 'nombre') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('descripcion') %} class="selected"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
+        </div>
+    </th>
+    <th scope="col">
+        <div {% if items.isSorted('fechaInicio') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Inicio', 'fechaInicio') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaFin') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Fecha Fin', 'fechaFin') }}
         </div>
     </th>
 {% endblock %}
 {% block table_columns %}
     <th scope="col">Nombre</th>
-    <th scope="col">Descripcion</th>
+    <th scope="col">Descripción</th>
     <th scope="col">Fecha Inicio</th>
     <th scope="col">Fecha Fin</th>
     <th scope="col">Empresa</th>
     <th scope="col">Líder</th>
+    <th scope="col">Progreso</th>
     <th scope="col"></th>
     <th scope="col"></th>
 {% endblock %}
@@ -60,6 +66,11 @@
                 {% endif %}
             </td>
             <td>
+                <a id="_modal_btn" href="#" data-id="{{ item.id | urlencrypt }}" class="">
+                    Ver Progreso
+                </a>
+            </td>
+            <td>
                 <a href="{{ path('admin_project_edit', {'id': item.id | urlencrypt }) }}">Edit</a>
             </td>
             <td>
@@ -76,4 +87,33 @@
 {% endblock %}
 {% block table_footer %}
     <a class="btn btn-primary btn-block" href="{{ path('admin_project_create') }}">Nuevo Proyecto</a>
+    {# dialog modal #}
+    <div class="modal fade" id="_modal" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+        {# geretated  #}
+    </div>
+    {# dialog modal #}
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).on("click", "#_modal_btn", function () {
+            var id = $(this).data('id');
+            var res = "";
+            var done = false;
+            var url = "http://127.0.0.1:8000/admin/project/progress/"+id;
+            $.when(
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function (response) {
+                        res = response;
+                        done = true;
+                    },
+                })).then(
+                function () {
+                    if (done) {
+                        $("#_modal").html(res).modal("show");
+                    }
+                });
+        });
+    </script>
 {% endblock %}

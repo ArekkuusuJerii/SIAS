@@ -22,27 +22,27 @@
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('descripcion') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('descripcion') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaInicio') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaInicio') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Inicio', 'fechaInicio') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaFin') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaFin') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Finalización', 'fechaFin') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaInicioReal') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaInicioReal') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Inicio Real', 'fechaInicioReal') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('fechaFinReal') %} class="btn"{% endif %}>
+        <div {% if items.isSorted('fechaFinReal') %} class="selected"{% endif %}>
             {{ knp_pagination_sortable(items, 'Finalización Real', 'fechaFinReal') }}
         </div>
     </th>
@@ -53,8 +53,13 @@
     <th scope="col">Fecha de Finalización</th>
     <th scope="col">Fecha de Inicio Real</th>
     <th scope="col">Fecha de Finalización Real</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
+    {% if is_leader %}
+        <th scope="col">Participante</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    {% else %}
+        <th scope="col"></th>
+    {% endif %}
 {% endblock %}
 {% block table_rows %}
     {% for item in items %}
@@ -90,6 +95,15 @@
             </td>
             {% if is_leader %}
                 <td>
+                    {% if item.responsable is not null %}
+                        {{ item.responsable.usuario.persona.nombre }}
+                        {{ item.responsable.usuario.persona.apellidop }}
+                        {{ item.responsable.usuario.persona.apellidom }}
+                    {% else %}
+                        Sin participante
+                    {% endif %}
+                </td>
+                <td>
                     <a href="{{ path('user_activity_edit', {'id': item.id | urlencrypt , 'project_id': project_id | urlencrypt}) }}">Editar</a>
                 </td>
                 <td>
@@ -121,5 +135,11 @@
     {% if is_leader %}
         <a class="btn btn-primary btn-block"
            href="{{ path('user_activity_create', {'project_id': project_id | urlencrypt}) }}">Nueva Actividad</a>
+        <div class="text-center card" style="margin-top: 25px">
+            <div class="card-body">
+                <h5 class="card-title">Seguimiento del proyecto</h5>
+                <p class="card-text">Porcentaje completado: {{ projectProgress }}%</p>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

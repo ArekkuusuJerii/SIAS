@@ -33,19 +33,23 @@ class UserController extends ControllerBase
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function activitiesAction(Request $request, $id)
     {
         $query = $this->getManager()->getRepository('BackendBundle:Proyecto');
+        $projectProgress = $query->getProgress($id);
+        $activityQuery = array();
         if (!$this->isLeader($id)) {
-            $query = $query->getActivities($id, $this->getUser()->getId());
-            if (!$query) $query = array();
+            $activityQuery = $query->getActivities($id, $this->getUser()->getId());
+            if (!$activityQuery) $activityQuery = array();
         } else {
-            $query = $query->find($id);
-            $query = $query ? $query->getActividades() : array();
+            $projectQuery = $query->find($id);
+            $activityQuery = $projectQuery ? $projectQuery->getActividades() : array();
         }
         return $this->render('AppBundle:user:activities.html.twig', array(
-            'items' => $this->makePaginationFromQuery($request, $query),
+            'items' => $this->makePaginationFromQuery($request, $activityQuery),
+            'projectProgress' => $projectProgress,
             'project_id' => $id,
             'is_leader' => $this->isLeader($id)
         ));

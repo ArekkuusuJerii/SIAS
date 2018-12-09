@@ -153,6 +153,19 @@ CREATE TABLE IF NOT EXISTS `sias`.`Actividad` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE PROCEDURE progress(
+  id INT
+)
+  BEGIN
+    DECLARE completed INT DEFAULT 0;
+    DECLARE total INT DEFAULT 0;
+    SET completed = (SELECT COUNT(*)
+                     FROM actividad a
+                     WHERE a.proyecto = id
+                       AND a.fecha_fin_real IS NOT NULL);
+    SET total = (SELECT COUNT(*) FROM actividad a WHERE a.proyecto = id);
+    SELECT completed / total * 100 AS progress;
+  END;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

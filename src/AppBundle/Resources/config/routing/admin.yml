@@ -7,6 +7,10 @@ admin_project:
   path: /project
   defaults: {_controller: AppBundle:Admin:project}
 
+admin_project_progress:
+  path: /project/progress/{id}
+  defaults: {_controller: AppBundle:Admin:projectProgress}
+
 admin_project_create:
   path: /project/create
   defaults: {_controller: AppBundle:Admin:projectCreate}
