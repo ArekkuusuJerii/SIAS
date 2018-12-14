@@ -3,6 +3,7 @@
 namespace BackendBundle\Form;
 
 use BackendBundle\Entity\Desarrollador;
+use BackendBundle\Entity\Repository\DesarrolladorRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -59,15 +60,20 @@ class ProyectoType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('lider', EntityType::class, array(
+            ->add('desarrolladores', EntityType::class, array(
+                'label' => 'Participantes',
                 'class' => 'BackendBundle\Entity\Desarrollador',
-                'choice_label'  => function (Desarrollador $desarrollador) {
+                'query_builder' => function (DesarrolladorRepository $r) use ($options) {
+                    return $r->getAllDevelopers($options['project']);
+                },
+                'choice_label' => function (Desarrollador $desarrollador) {
                     return $desarrollador->getUsuario()->getPersona()->getNombre()
                         . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidop()
-                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom();
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom()
+                        . ' : ' . $desarrollador->getPuesto()->getTitulo();
                 },
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => true,
                 'required' => false,
                 'attr' => array(
                     'class' => 'form-control form-group'
@@ -87,7 +93,8 @@ class ProyectoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\Proyecto'
+            'data_class' => 'BackendBundle\Entity\Proyecto',
+            'project' => null
         ));
     }
 

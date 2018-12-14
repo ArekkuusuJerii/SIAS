@@ -38,11 +38,6 @@
             {{ knp_pagination_sortable(items, 'Empresa', 'empresa') }}
         </div>
     </th>
-    <th scope="col">
-        <div {% if items.isSorted('lider') %} class="selected"{% endif %}>
-            {{ knp_pagination_sortable(items, 'Líder', 'lider') }}
-        </div>
-    </th>
 {% endblock %}
 {% block table_columns %}
     <th scope="col">Nombre</th>
@@ -50,7 +45,6 @@
     <th scope="col">Fecha Inicio</th>
     <th scope="col">Fecha Fin</th>
     <th scope="col">Empresa</th>
-    <th scope="col">Líder</th>
     <th scope="col"></th>
 {% endblock %}
 {% block table_rows %}
@@ -61,15 +55,6 @@
             <td>{{ item.fechaInicio|date('d/M/Y') }}</td>
             <td>{{ item.fechaFin|date('d/M/Y') }}</td>
             <td>{{ item.empresa.nombre }}</td>
-            <td>
-                {% if item.lider is not null %}
-                    {{ item.lider.usuario.persona.nombre }}
-                    {{ item.lider.usuario.persona.apellidop }}
-                    {{ item.lider.usuario.persona.apellidom }}
-                {% else %}
-                    Sin Líder
-                {% endif %}
-            </td>
             <td>
                 <a href="{{ path('user_activities', {'id': item.id | urlencrypt }) }}">Ver Actividades</a>
             </td>

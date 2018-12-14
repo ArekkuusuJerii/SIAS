@@ -31,17 +31,6 @@ class UsuarioType extends AbstractType
                     'class' => 'form-control form-group'
                 )
             ))
-            ->add('rol', ChoiceType::class, array(
-                'label' => 'Rol',
-                'choices' => array(
-                    'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN'
-                ),
-                'attr' => array(
-                    'required' => true,
-                    'class' => 'form-control form-group'
-                )
-            ))
             ->add('persona', PersonaType::class, array(
                 'label' => false,
                 'attr' => array(

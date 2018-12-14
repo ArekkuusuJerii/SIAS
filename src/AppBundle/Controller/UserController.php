@@ -73,7 +73,7 @@ class UserController extends ControllerBase
         } else {
             $entity = new Actividad();
             $entity->setProyecto($manager->getRepository('BackendBundle:Proyecto')->find($project_id));
-            $form = $this->createForm(ActividadType::class, $entity);
+            $form = $this->createForm(ActividadType::class, $entity, array('project' => $project_id));
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $manager = $this->getManager();
@@ -109,7 +109,7 @@ class UserController extends ControllerBase
             )));
         } else {
             $entity = $this->getManager()->getRepository('BackendBundle:Actividad')->find($id);
-            $form = $this->createForm(ActividadType::class, $entity);
+            $form = $this->createForm(ActividadType::class, $entity, array('project' => $project_id));
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $manager = $this->getManager();

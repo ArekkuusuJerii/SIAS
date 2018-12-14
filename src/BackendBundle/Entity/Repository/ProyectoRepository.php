@@ -11,7 +11,6 @@ namespace BackendBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProyectoRepository extends EntityRepository
 {
@@ -24,13 +23,21 @@ class ProyectoRepository extends EntityRepository
      */
     public function getIsLeader($project_id, $user_id)
     {
-        $query = $this->getEntityManager()->createQueryBuilder()
+        $em = $this->getEntityManager();
+        $builder = $em->createQueryBuilder();
+        $query = $builder
             ->select('count(p.id)')
             ->from('BackendBundle:Proyecto', 'p')
             ->join('BackendBundle:Desarrollador', 'd', Join::WITH, 'p.id = d.proyecto')
             ->where('p.id = ?0')
             ->andWhere('d.usuario = ?1')
-            ->andWhere('p.lider = d.id');
+            ->andWhere($builder->expr()->in(
+                'd.puesto',
+                $em->createQueryBuilder()
+                    ->select('p0.id')
+                    ->from('BackendBundle:Puesto', 'p0')
+                    ->where('p0.titulo like \'Líder\'')->getDQL()
+            ));
         $query->setParameters(array($project_id, $user_id));
         /** @noinspection PhpUnhandledExceptionInspection */
         return $query->getQuery()->getSingleScalarResult() != 0;

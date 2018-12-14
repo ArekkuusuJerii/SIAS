@@ -3,6 +3,7 @@
 namespace BackendBundle\Form;
 
 use BackendBundle\Entity\Desarrollador;
+use BackendBundle\Entity\Repository\DesarrolladorRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -42,10 +43,14 @@ class ActividadType extends AbstractType
             ))
             ->add('responsable', EntityType::class, array(
                 'class' => 'BackendBundle\Entity\Desarrollador',
+                'query_builder' => function (DesarrolladorRepository $r) use ($options) {
+                    return $r->getAllNotLeaders($options['project']);
+                },
                 'choice_label' => function (Desarrollador $desarrollador) {
                     return $desarrollador->getUsuario()->getPersona()->getNombre()
                         . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidop()
-                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom();
+                        . ' ' . $desarrollador->getUsuario()->getPersona()->getApellidom()
+                        . ' : ' . $desarrollador->getPuesto()->getTitulo();
                 },
                 'expanded' => false,
                 'multiple' => false,
@@ -68,7 +73,8 @@ class ActividadType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\Actividad'
+            'data_class' => 'BackendBundle\Entity\Actividad',
+            'project' => null
         ));
     }
 

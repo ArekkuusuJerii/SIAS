@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Desarrollador
  *
  * @ORM\Table(name="desarrollador", indexes={@ORM\Index(name="fk_Desarrollador_Proyecto1_idx", columns={"proyecto"}), @ORM\Index(name="fk_Desarrollador_Puesto_idx", columns={"puesto"}), @ORM\Index(name="fk_Desarrollador_Usuario1_idx", columns={"usuario"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="BackendBundle\Entity\Repository\DesarrolladorRepository")
  */
 class Desarrollador
 {
@@ -26,7 +26,7 @@ class Desarrollador
      *
      * @ORM\ManyToOne(targetEntity="Proyecto")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="proyecto", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="proyecto", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $proyecto;

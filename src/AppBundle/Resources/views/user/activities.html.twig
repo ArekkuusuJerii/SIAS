@@ -17,13 +17,13 @@
         </div>
     </th>
     <th scope="col">
-        <div>
-            Fecha:
+        <div {% if items.isSorted('descripcion') %} class="selected"{% endif %}>
+            {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
         </div>
     </th>
     <th scope="col">
-        <div {% if items.isSorted('descripcion') %} class="selected"{% endif %}>
-            {{ knp_pagination_sortable(items, 'Descripción', 'descripcion') }}
+        <div>
+            Fecha:
         </div>
     </th>
     <th scope="col">
@@ -125,7 +125,7 @@
         </tr>
     {% else %}
         <tr>
-            <td colspan="6" class="text-center">
+            <td colspan="9" class="text-center">
                 Sin Actividades
             </td>
         </tr>

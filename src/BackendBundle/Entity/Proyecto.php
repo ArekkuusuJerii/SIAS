@@ -53,7 +53,7 @@ class Proyecto
     /**
      * @var Desarrollador
      *
-     * @ORM\ManyToOne(targetEntity="Desarrollador", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Desarrollador")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lider", referencedColumnName="id")
      * })
@@ -71,7 +71,7 @@ class Proyecto
     private $empresa;
 
     /**
-     * @ORM\OneToMany(targetEntity="Desarrollador", mappedBy="proyecto", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Desarrollador", mappedBy="proyecto", cascade={"persist"})
      */
     private $desarrolladores;
 

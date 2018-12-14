@@ -12,6 +12,7 @@ use BackendBundle\Entity\Desarrollador;
 use BackendBundle\Entity\Empresa;
 use BackendBundle\Entity\Proyecto;
 use BackendBundle\Entity\Puesto;
+use BackendBundle\Entity\Usuario;
 use BackendBundle\Form\DesarrolladorType;
 use BackendBundle\Form\EmpresaType;
 use BackendBundle\Form\ProyectoType;
@@ -60,12 +61,30 @@ class AdminController extends ControllerBase
      */
     public function projectCreateAction(Request $request)
     {
-        return $this->defaultCreate($request,
-            new Proyecto(),
-            ProyectoType::class,
-            'Crear Proyecto',
-            'admin_project'
-        );
+        $entity = new Proyecto();
+        $form = $this->createForm(ProyectoType::class, $entity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getManager();
+            $manager->persist($entity);
+            $manager->flush();
+            $ds = $manager->getRepository('BackendBundle:Desarrollador')->findAll();
+            foreach ($ds as $d) {
+                if($entity->getDesarrolladores()->contains($d)) {
+                    $d->setProyecto($entity);
+                } else if($d->getProyecto() && $d->getProyecto()->getId() == $entity->getId()) {
+                    $d->setProyecto(null);
+                }
+                $manager->persist($d);
+            }
+            $manager->flush();
+            return $this->redirectTo('admin_project');
+        }
+        return $this->render($this->defaultManage(), array(
+            'previous_page' => 'admin_project',
+            'title' => 'Crear Proyecto',
+            'form' => $form->createView()
+        ));
     }
 
     /**
@@ -76,12 +95,30 @@ class AdminController extends ControllerBase
      */
     public function projectEditAction(Request $request, $id)
     {
-        return $this->defaultEdit($request,
-            'BackendBundle:Proyecto',
-            ProyectoType::class, $id,
-            'Editar Proyecto',
-            'admin_project'
-        );
+        $entity = $this->getManager()->getRepository('BackendBundle:Proyecto')->find($id);
+        $form = $this->createForm(ProyectoType::class, $entity, array('project' => $id));
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getManager();
+            $manager->persist($entity);
+            $manager->flush();
+            $ds = $manager->getRepository('BackendBundle:Desarrollador')->findAll();
+            foreach ($ds as $d) {
+                if($entity->getDesarrolladores()->contains($d)) {
+                    $d->setProyecto($entity);
+                } else if($d->getProyecto() && $d->getProyecto()->getId() == $entity->getId()) {
+                    $d->setProyecto(null);
+                }
+                $manager->persist($d);
+            }
+            $manager->flush();
+            return $this->redirectTo('admin_project');
+        }
+        return $this->render($this->defaultManage(), array(
+            'previous_page' => 'admin_project',
+            'title' => 'Editar Proyecto',
+            'form' => $form->createView()
+        ));
     }
 
     /**
@@ -165,6 +202,8 @@ class AdminController extends ControllerBase
     public function developerCreateAction(Request $request)
     {
         $entity = new Desarrollador();
+        $entity->setUsuario(new Usuario());
+        $entity->getUsuario()->setRol('ROLE_USER');
         $form = $this->createForm(DesarrolladorType::class, $entity);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -207,7 +246,7 @@ class AdminController extends ControllerBase
         }
         return $this->render('AppBundle:admin:admin_manage.html.twig', array(
             'previous_page' => 'admin_developer',
-            'title' => 'Editar Proyecto',
+            'title' => 'Editar Desarrollador',
             'form' => $form->createView()
         ));
     }

@@ -22,15 +22,6 @@ class DesarrolladorType extends AbstractType
                     'class' => 'form-group'
                 )
             ))
-            ->add('proyecto', EntityType::class, array(
-                'class' => 'BackendBundle\Entity\Proyecto',
-                'choice_label' => 'nombre',
-                'expanded' => false,
-                'multiple' => false,
-                'attr' => array(
-                    'class' => 'form-control form-group'
-                )
-            ))
             ->add('puesto', EntityType::class, array(
                 'class' => 'BackendBundle\Entity\Puesto',
                 'choice_label' => 'titulo',
